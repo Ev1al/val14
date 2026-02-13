@@ -36,10 +36,46 @@
             padding: 36px 28px 48px 28px;
             border: 1px solid rgba(255, 255, 255, 0.6);
             transition: opacity 0.3s ease;
+            position: relative;
         }
 
         .hidden {
             display: none !important;
+        }
+
+        /* Кнопка "Назад" для второй страницы */
+        .back-button {
+            position: absolute;
+            top: 20px;
+            right: 25px;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.3rem;
+            font-style: italic;
+            color: #9f4e58;
+            background: rgba(255, 240, 235, 0.8);
+            padding: 8px 18px;
+            border-radius: 40px;
+            box-shadow: 0 2px 8px rgba(190, 120, 120, 0.2);
+            border: 1px solid #fcc5c0;
+            backdrop-filter: blur(2px);
+            cursor: pointer;
+            transition: all 0.2s ease;
+            z-index: 20;
+            letter-spacing: 0.5px;
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .back-button:hover {
+            background: rgba(255, 230, 225, 0.9);
+            transform: scale(1.05);
+            box-shadow: 0 4px 12px rgba(180, 100, 100, 0.3);
+            color: #8a3a44;
+        }
+
+        .back-button:active {
+            transform: scale(0.98);
         }
 
         /* ---------- СТРАНИЦА 1: сердечко (исправлено - текст полностью помещается) ---------- */
@@ -113,6 +149,7 @@
             display: flex;
             flex-direction: column;
             gap: 40px;
+            position: relative;
         }
 
         .win-section {
@@ -255,7 +292,7 @@
             font-weight: 600;
         }
 
-        /* ПОЗДРАВЛЕНИЕ - теперь такой же шрифт как у YOU WON */
+        /* ПОЗДРАВЛЕНИЕ - такой же шрифт как у YOU WON */
         .poem-text {
             font-family: 'Cormorant Garamond', serif;
             font-size: 2.2rem;
@@ -292,6 +329,7 @@
             .poem-text { font-size: 1.8rem; }
             .you-won-title { font-size: 3.2rem; }
             .click-hint { font-size: 1.4rem; padding: 8px 20px; }
+            .back-button { font-size: 1.1rem; padding: 6px 14px; top: 12px; right: 15px; }
             
             .heart-text.line1 { font-size: 32px; }
             .heart-text.line2 { font-size: 36px; }
@@ -300,13 +338,12 @@
     </style>
 </head>
 <body>
-    <!-- СТРАНИЦА 1: сердечко (теперь надпись полностью помещается) -->
+    <!-- СТРАНИЦА 1: сердечко -->
     <div id="page1" class="page heart-page">
         <div class="valentine-card" id="heart-click">
             <svg class="heart-svg" viewBox="0 0 300 240" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M150 50 C 110 10, 30 40, 30 100 C 30 160, 150 210, 150 210 C 150 210, 270 160, 270 100 C 270 40, 190 10, 150 50 Z" fill="#f8bfc7" stroke="#d85a6a" stroke-width="2.5" />
                 <path d="M80 80 L 150 130 L 220 80" stroke="#ffffff" stroke-width="2.5" fill="none" stroke-linecap="round" opacity="0.8"/>
-                <!-- Текст полностью помещается: координаты и размеры подобраны -->
                 <text x="150" y="125" class="heart-text line1" fill="#922e3c">Happy</text>
                 <text x="150" y="170" class="heart-text line2" fill="#922e3c">Valentine's</text>
                 <text x="150" y="215" class="heart-text line3" fill="#922e3c">Day</text>
@@ -315,23 +352,25 @@
         <div class="click-hint">✶ нажми на валентинку ✶</div>
     </div>
 
-    <!-- СТРАНИЦА 2 -->
+    <!-- СТРАНИЦА 2 с кнопкой "Назад" -->
     <div id="page2" class="page game-page hidden">
+        <!-- Кнопка возврата к валентинке -->
+        <div class="back-button" id="back-button">← Назад</div>
+        
         <div class="win-section">
             <div class="you-won-title">YOU WON</div>
 
             <div class="tic-tac-toe-grid">
-                <!-- Используем ♡ (пустое сердечко) как просили, но с анимацией -->
                 <div class="cell"><span class="heart-symbol">♡</span></div>
-                <div class="cell"><span class="x-symbol">✗</span></div>
+                <div class="cell"><span class="x-symbol"></span></div>
                 <div class="cell"><span class="x-symbol">✗</span></div>
 
                 <div class="cell"><span class="x-symbol">✗</span></div>
                 <div class="cell"><span class="heart-symbol">♡</span></div>
-                <div class="cell"><span class="x-symbol">✗</span></div>
+                <div class="cell"><span class="x-symbol"></span></div>
 
                 <div class="cell"><span class="x-symbol">✗</span></div>
-                <div class="cell"><span class="x-symbol">✗</span></div>
+                <div class="cell"><span class="x-symbol"></span></div>
                 <div class="cell"><span class="heart-symbol">♡</span></div>
             </div>
         </div>
@@ -355,7 +394,7 @@
             </div>
         </div>
 
-        <!-- поздравление теперь таким же шрифтом как YOU WON (Cormorant Garamond italic) -->
+        <!-- поздравление -->
         <div class="poem-text">
             Мне кажется, этот праздник создан не только для большой любви, но и для того, чтобы благодарить людей, которые согревают нас своим присутствием. Ты появился в моем феврале совсем недавно, но уже успел сделать его чуточку светлее и добрее. Пусть и твой день будет наполнен приятными эмоциями, искренними улыбками и маленькими чудесами.
         </div>
@@ -367,7 +406,9 @@
             const page1 = document.getElementById('page1');
             const page2 = document.getElementById('page2');
             const heartButton = document.getElementById('heart-click');
+            const backButton = document.getElementById('back-button');
 
+            // Переход на вторую страницу
             if (page1 && page2 && heartButton) {
                 heartButton.addEventListener('click', function(e) {
                     page1.classList.add('hidden');
@@ -378,7 +419,38 @@
                     page2.style.animation = 'fadeIn 0.6s';
                 });
             }
+
+            // Возврат на первую страницу
+            if (backButton && page1 && page2) {
+                backButton.addEventListener('click', function(e) {
+                    page2.classList.add('hidden');
+                    page1.classList.remove('hidden');
+                    document.body.style.background = 'linear-gradient(145deg, #fceae9 0%, #f5d6d4 100%)';
+                    
+                    // Небольшая анимация для сердечка при возврате
+                    const heartCard = document.querySelector('.valentine-card');
+                    if (heartCard) {
+                        heartCard.style.animation = 'none';
+                        heartCard.offsetHeight; // форсируем reflow
+                        heartCard.style.animation = 'float 0.6s';
+                    }
+                });
+            }
+
+            // Добавим анимацию плавания для сердечка на первой странице
+            const style = document.createElement('style');
+            style.innerHTML = `
+                @keyframes float {
+                    0% { transform: translateY(0px); }
+                    50% { transform: translateY(-8px); }
+                    100% { transform: translateY(0px); }
+                }
+                .valentine-card {
+                    animation: float 3s infinite ease-in-out;
+                }
+            `;
+            document.head.appendChild(style);
         })();
     </script>
 </body>
-</html> 
+</html>
