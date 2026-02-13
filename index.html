@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Валентинка · бьющиеся сердечки ♡</title>
+    <title>♡</title>
     <!-- Подключаем шрифты -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -24,6 +24,7 @@
             justify-content: center;
             padding: 16px;
             transition: background 0.4s ease;
+            /* Убрал overflow: hidden - теперь страница будет прокручиваться */
         }
 
         .page {
@@ -43,6 +44,193 @@
             display: none !important;
         }
 
+        /* ========== ЗАЩИТА: Модальное окно для ввода имени ========== */
+        .auth-modal {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(255, 240, 235, 0.95);
+            backdrop-filter: blur(10px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            animation: modalFadeIn 0.5s ease;
+        }
+
+        @keyframes modalFadeIn {
+            from { opacity: 0; transform: scale(0.9); }
+            to { opacity: 1; transform: scale(1); }
+        }
+
+        .auth-container {
+            background: rgba(255, 255, 255, 0.9);
+            border-radius: 48px;
+            padding: 48px 40px;
+            box-shadow: 0 15px 40px rgba(200, 80, 90, 0.3);
+            border: 2px solid #fcc5c0;
+            text-align: center;
+            max-width: 480px;
+            width: 90%;
+            position: relative;
+            animation: slideUp 0.6s ease;
+        }
+
+        @keyframes slideUp {
+            from { opacity: 0; transform: translateY(30px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+
+        .auth-container::before {
+            content: '';
+            position: absolute;
+            top: -15px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 30px;
+            background: #ffe1db;
+            border-radius: 50%;
+            z-index: -1;
+        }
+
+        .auth-title {
+            font-family: 'Great Vibes', cursive;
+            font-size: 2.8rem;
+            color: #922e3c;
+            margin-bottom: 20px;
+            letter-spacing: 1.5px;
+            text-shadow: 2px 2px 0 #ffe5e2;
+        }
+
+        .auth-subtitle {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.6rem;
+            color: #7c4343;
+            font-style: italic;
+            margin-bottom: 32px;
+            line-height: 1.5;
+            letter-spacing: 0.5px;
+        }
+
+        .auth-input-container {
+            position: relative;
+            margin: 20px 0;
+        }
+
+        .auth-input {
+            width: 100%;
+            max-width: 320px;
+            padding: 18px 24px;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.8rem;
+            font-style: italic;
+            color: #922e3c;
+            background: #fff9f8;
+            border: 2px solid #fcc5c0;
+            border-radius: 40px;
+            outline: none;
+            transition: all 0.3s ease;
+            box-shadow: 0 4px 12px rgba(200, 100, 110, 0.15);
+            letter-spacing: 1px;
+        }
+
+        .auth-input::placeholder {
+            color: #c2727a;
+            opacity: 0.6;
+        }
+
+        .auth-input:focus {
+            border-color: #e91e63;
+            box-shadow: 0 6px 16px rgba(233, 30, 99, 0.25);
+            transform: scale(1.02);
+        }
+
+        .auth-button {
+            background: linear-gradient(135deg, #e91e63 0%, #f44336 100%);
+            color: white;
+            border: none;
+            padding: 16px 48px;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.6rem;
+            font-style: italic;
+            font-weight: 500;
+            border-radius: 40px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            margin-top: 12px;
+            letter-spacing: 1px;
+            box-shadow: 0 6px 18px rgba(233, 30, 99, 0.4);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .auth-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.3), transparent);
+            transition: left 0.5s;
+        }
+
+        .auth-button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 8px 24px rgba(233, 30, 99, 0.6);
+        }
+
+        .auth-button:hover::before {
+            left: 100%;
+        }
+
+        .auth-button:active {
+            transform: translateY(1px);
+        }
+
+        .auth-error {
+            color: #d32f2f;
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.4rem;
+            font-style: italic;
+            margin-top: 16px;
+            min-height: 24px;
+            opacity: 0;
+            transition: opacity 0.3s ease;
+        }
+
+        .auth-error.show {
+            opacity: 1;
+            animation: shake 0.5s;
+        }
+
+        @keyframes shake {
+            0%, 100% { transform: translateX(0); }
+            25% { transform: translateX(-8px); }
+            75% { transform: translateX(8px); }
+        }
+
+        .auth-hint {
+            font-family: 'Cormorant Garamond', serif;
+            font-size: 1.3rem;
+            color: #c2727a;
+            font-style: italic;
+            margin-top: 24px;
+            opacity: 0.8;
+            letter-spacing: 0.5px;
+        }
+
+        .auth-hint::before,
+        .auth-hint::after {
+            content: '✦';
+            margin: 0 8px;
+            color: #e91e63;
+        }
+
+        /* ========== ОСНОВНОЙ ДИЗАЙН ========== */
         /* Кнопка "Назад" для второй страницы */
         .back-button {
             position: absolute;
@@ -78,7 +266,7 @@
             transform: scale(0.98);
         }
 
-        /* ---------- СТРАНИЦА 1: сердечко (исправлено - текст полностью помещается) ---------- */
+        /* ---------- СТРАНИЦА 1: сердечко ---------- */
         .heart-page {
             display: flex;
             flex-direction: column;
@@ -106,7 +294,6 @@
             height: auto;
         }
 
-        /* Шрифт Great Vibes, размеры подобраны чтобы всё вместилось */
         .heart-text {
             font-family: 'Great Vibes', cursive;
             letter-spacing: 1.5px;
@@ -196,7 +383,6 @@
             color: #a53842;
         }
 
-        /* БЬЮЩИЕСЯ СЕРДЕЧКА ♡ */
         .heart-symbol {
             font-size: 4rem;
             line-height: 1;
@@ -292,7 +478,6 @@
             font-weight: 600;
         }
 
-        /* ПОЗДРАВЛЕНИЕ - такой же шрифт как у YOU WON */
         .poem-text {
             font-family: 'Cormorant Garamond', serif;
             font-size: 2.2rem;
@@ -334,12 +519,45 @@
             .heart-text.line1 { font-size: 32px; }
             .heart-text.line2 { font-size: 36px; }
             .heart-text.line3 { font-size: 36px; }
+            
+            .auth-container { padding: 32px 24px; }
+            .auth-title { font-size: 2.2rem; }
+            .auth-subtitle { font-size: 1.4rem; }
+            .auth-input { font-size: 1.6rem; padding: 14px 20px; }
+            .auth-button { font-size: 1.4rem; padding: 12px 36px; }
         }
     </style>
 </head>
 <body>
+    <!-- ========== МОДАЛЬНОЕ ОКНО ДЛЯ ВВОДА ИМЕНИ ========== -->
+    <div class="auth-modal" id="authModal">
+        <div class="auth-container">
+            <h1 class="auth-title">♡ Валентинка ♡</h1>
+            <p class="auth-subtitle"></p>
+            
+            <div class="auth-input-container">
+                <input 
+                    type="text" 
+                    id="nameInput" 
+                    class="auth-input" 
+                    placeholder="Введи своё имя" 
+                    autocomplete="off"
+                    autofocus
+                >
+            </div>
+            
+            <button class="auth-button" id="authButton">Открыть</button>
+            
+            <div class="auth-error" id="authError">
+                Это не твоя валентинка... Попробуй ещё раз
+            </div>
+            
+            <p class="auth-hint">Только для особенного человека 🤗</p>
+        </div>
+    </div>
+
     <!-- СТРАНИЦА 1: сердечко -->
-    <div id="page1" class="page heart-page">
+    <div id="page1" class="page heart-page hidden">
         <div class="valentine-card" id="heart-click">
             <svg class="heart-svg" viewBox="0 0 300 240" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <path d="M150 50 C 110 10, 30 40, 30 100 C 30 160, 150 210, 150 210 C 150 210, 270 160, 270 100 C 270 40, 190 10, 150 50 Z" fill="#f8bfc7" stroke="#d85a6a" stroke-width="2.5" />
@@ -360,17 +578,21 @@
         <div class="win-section">
             <div class="you-won-title">YOU WON</div>
 
+            <!-- Исправленное поле: только диагональ из сердечек, остальные клетки пустые -->
             <div class="tic-tac-toe-grid">
+                <!-- Верхний ряд: сердечко, пусто, пусто -->
                 <div class="cell"><span class="heart-symbol">♡</span></div>
-                <div class="cell"><span class="x-symbol"></span></div>
-                <div class="cell"><span class="x-symbol">✗</span></div>
+                <div class="cell">✗</div>
+                <div class="cell"></div>
 
-                <div class="cell"><span class="x-symbol">✗</span></div>
+                <!-- Средний ряд: пусто, сердечко, пусто -->
+                <div class="cell">✗</div>
                 <div class="cell"><span class="heart-symbol">♡</span></div>
-                <div class="cell"><span class="x-symbol"></span></div>
+                <div class="cell"></div>
 
-                <div class="cell"><span class="x-symbol">✗</span></div>
-                <div class="cell"><span class="x-symbol"></span></div>
+                <!-- Нижний ряд: пусто, пусто, сердечко -->
+                <div class="cell"></div>
+                <div class="cell">✗</div>
                 <div class="cell"><span class="heart-symbol">♡</span></div>
             </div>
         </div>
@@ -403,43 +625,86 @@
 
     <script>
         (function() {
+            // ========== ЗАЩИТА: Проверка имени ==========
+            const authModal = document.getElementById('authModal');
+            const nameInput = document.getElementById('nameInput');
+            const authButton = document.getElementById('authButton');
+            const authError = document.getElementById('authError');
+            
             const page1 = document.getElementById('page1');
             const page2 = document.getElementById('page2');
             const heartButton = document.getElementById('heart-click');
             const backButton = document.getElementById('back-button');
-
-            // Переход на вторую страницу
+            
+            // ЗАМЕНИТЕ ЭТО ИМЯ НА ИМЯ ПОЛУЧАТЕЛЯ!
+            const CORRECT_NAME = "Александр"; // ← СЮДА ВПИШИТЕ ИМЯ
+            
+            // Обработчик кнопки "Открыть"
+            authButton.addEventListener('click', checkName);
+            
+            // Обработчик нажатия Enter в поле ввода
+            nameInput.addEventListener('keypress', function(e) {
+                if (e.key === 'Enter') {
+                    checkName();
+                }
+            });
+            
+            function checkName() {
+                const enteredName = nameInput.value.trim();
+                
+                if (enteredName.toLowerCase() === CORRECT_NAME.toLowerCase()) {
+                    // Правильное имя - показываем страницу
+                    authModal.style.animation = 'modalFadeOut 0.4s forwards';
+                    setTimeout(() => {
+                        authModal.classList.add('hidden');
+                        page1.classList.remove('hidden');
+                    }, 400);
+                } else {
+                    // Неправильное имя - показываем ошибку
+                    authError.classList.add('show');
+                    
+                    // Анимация тряски поля ввода
+                    nameInput.style.animation = 'shake 0.5s';
+                    
+                    setTimeout(() => {
+                        authError.classList.remove('show');
+                        nameInput.style.animation = 'none';
+                        nameInput.value = '';
+                        nameInput.focus();
+                    }, 2000);
+                }
+            }
+            
+            // Добавляем анимацию исчезновения модального окна
+            const style = document.createElement('style');
+            style.innerHTML = `
+                @keyframes modalFadeOut {
+                    from { opacity: 1; transform: scale(1); }
+                    to { opacity: 0; transform: scale(0.9); }
+                }
+            `;
+            document.head.appendChild(style);
+            
+            // ========== ОСНОВНАЯ ЛОГИКА ==========
             if (page1 && page2 && heartButton) {
                 heartButton.addEventListener('click', function(e) {
                     page1.classList.add('hidden');
                     page2.classList.remove('hidden');
                     document.body.style.background = 'linear-gradient(155deg, #f6dbd8 0%, #efc7c3 100%)';
-                    
-                    // Добавим эффект появления
-                    page2.style.animation = 'fadeIn 0.6s';
                 });
             }
 
-            // Возврат на первую страницу
             if (backButton && page1 && page2) {
                 backButton.addEventListener('click', function(e) {
                     page2.classList.add('hidden');
                     page1.classList.remove('hidden');
                     document.body.style.background = 'linear-gradient(145deg, #fceae9 0%, #f5d6d4 100%)';
-                    
-                    // Небольшая анимация для сердечка при возврате
-                    const heartCard = document.querySelector('.valentine-card');
-                    if (heartCard) {
-                        heartCard.style.animation = 'none';
-                        heartCard.offsetHeight; // форсируем reflow
-                        heartCard.style.animation = 'float 0.6s';
-                    }
                 });
             }
 
             // Добавим анимацию плавания для сердечка на первой странице
-            const style = document.createElement('style');
-            style.innerHTML = `
+            const floatStyle = document.createElement('style');
+            floatStyle.innerHTML = `
                 @keyframes float {
                     0% { transform: translateY(0px); }
                     50% { transform: translateY(-8px); }
@@ -449,7 +714,7 @@
                     animation: float 3s infinite ease-in-out;
                 }
             `;
-            document.head.appendChild(style);
+            document.head.appendChild(floatStyle);
         })();
     </script>
 </body>
