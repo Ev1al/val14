@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>♡</title>
+    <title>Валентинка · бьющиеся сердечки ♡</title>
     <!-- Подключаем шрифты -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -24,7 +24,6 @@
             justify-content: center;
             padding: 16px;
             transition: background 0.4s ease;
-            /* Убрал overflow: hidden - теперь страница будет прокручиваться */
         }
 
         .page {
@@ -218,16 +217,15 @@
             font-size: 1.3rem;
             color: #c2727a;
             font-style: italic;
-            margin-top: 24px;
+            margin-top: 16px; /* Уменьшил отступ */
             opacity: 0.8;
             letter-spacing: 0.5px;
         }
 
+        /* Убрал звездочки */
         .auth-hint::before,
         .auth-hint::after {
-            content: '✦';
-            margin: 0 8px;
-            color: #e91e63;
+            content: none;
         }
 
         /* ========== ОСНОВНОЙ ДИЗАЙН ========== */
@@ -548,10 +546,11 @@
             
             <button class="auth-button" id="authButton">Открыть</button>
             
+            <!-- Исправлено: убраны лишние отступы и звездочки -->
             <div class="auth-error" id="authError">
                 Это не твоя валентинка... Попробуй ещё раз
             </div>
-            
+
             <p class="auth-hint">Только для особенного человека 🤗</p>
         </div>
     </div>
@@ -578,21 +577,17 @@
         <div class="win-section">
             <div class="you-won-title">YOU WON</div>
 
-            <!-- Исправленное поле: только диагональ из сердечек, остальные клетки пустые -->
             <div class="tic-tac-toe-grid">
-                <!-- Верхний ряд: сердечко, пусто, пусто -->
                 <div class="cell"><span class="heart-symbol">♡</span></div>
-                <div class="cell">✗</div>
+                <div class="cell"></div>
                 <div class="cell"></div>
 
-                <!-- Средний ряд: пусто, сердечко, пусто -->
-                <div class="cell">✗</div>
+                <div class="cell"></div>
                 <div class="cell"><span class="heart-symbol">♡</span></div>
                 <div class="cell"></div>
 
-                <!-- Нижний ряд: пусто, пусто, сердечко -->
                 <div class="cell"></div>
-                <div class="cell">✗</div>
+                <div class="cell"></div>
                 <div class="cell"><span class="heart-symbol">♡</span></div>
             </div>
         </div>
